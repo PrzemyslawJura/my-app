@@ -9,7 +9,7 @@ export default function App() {
   let navigationBar = <NavbarHome/>
   function userIsLogin(user)
   {
-    if (user == true) navigationBar = <NavbarBiznes/>
+    if (user == false) navigationBar = <NavbarBiznes/>
     else navigationBar = <NavbarHome/>
   }
   return (
