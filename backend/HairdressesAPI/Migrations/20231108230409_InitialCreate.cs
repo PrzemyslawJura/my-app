@@ -26,7 +26,7 @@ namespace HairdressesAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Adress",
+                name: "Addresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,9 +37,9 @@ namespace HairdressesAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Adress", x => x.Id);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Adress_Cities_CityId",
+                        name: "FK_Addresses_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
@@ -47,49 +47,53 @@ namespace HairdressesAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Salon",
+                name: "Salons",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(80)", maxLength: 80, nullable: false),
                     Description = table.Column<string>(type: "varchar(450)", maxLength: 450, nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false)
+                    PhoneNumber = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Salon", x => x.Id);
+                    table.PrimaryKey("PK_Salons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Salon_Adress_Id",
-                        column: x => x.Id,
-                        principalTable: "Adress",
+                        name: "FK_Salons_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     SecondName = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false)
+                    PhoneNumber = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Adress_Id",
-                        column: x => x.Id,
-                        principalTable: "Adress",
+                        name: "FK_Users_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Photo",
+                name: "Photos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -100,17 +104,17 @@ namespace HairdressesAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Photo", x => x.Id);
+                    table.PrimaryKey("PK_Photos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Photo_Salon_SalonId",
+                        name: "FK_Photos_Salons_SalonId",
                         column: x => x.SalonId,
-                        principalTable: "Salon",
+                        principalTable: "Salons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Worker",
+                name: "Workers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -123,17 +127,17 @@ namespace HairdressesAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Worker", x => x.Id);
+                    table.PrimaryKey("PK_Workers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Worker_Salon_SalonId",
+                        name: "FK_Workers_Salons_SalonId",
                         column: x => x.SalonId,
-                        principalTable: "Salon",
+                        principalTable: "Salons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -141,27 +145,25 @@ namespace HairdressesAPI.Migrations
                     UserReview = table.Column<decimal>(type: "decimal(5,2)", maxLength: 1, nullable: false),
                     Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
                     SalonId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_Salon_SalonId",
+                        name: "FK_Reviews_Salons_SalonId",
                         column: x => x.SalonId,
-                        principalTable: "Salon",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Salons",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Review_User_UserId",
+                        name: "FK_Reviews_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Service",
+                name: "Services",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -169,91 +171,103 @@ namespace HairdressesAPI.Migrations
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(5,2)", maxLength: 10, nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2(7)", nullable: false),
-                    SalonId = table.Column<int>(type: "int", nullable: false),
                     WorkerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Service", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Service_Salon_SalonId",
-                        column: x => x.SalonId,
-                        principalTable: "Salon",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Service_Worker_WorkerId",
+                        name: "FK_Services_Salons_WorkerId",
                         column: x => x.WorkerId,
-                        principalTable: "Worker",
+                        principalTable: "Salons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Services_Workers_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "Workers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Visit",
+                name: "Visits",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2(7)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Notification = table.Column<bool>(type: "bit", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Visit", x => x.Id);
+                    table.PrimaryKey("PK_Visits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Visit_Service_Id",
-                        column: x => x.Id,
-                        principalTable: "Service",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Visits_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Visit_User_UserId",
+                        name: "FK_Visits_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Adress_CityId",
-                table: "Adress",
+                name: "IX_Addresses_CityId",
+                table: "Addresses",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Photo_SalonId",
-                table: "Photo",
+                name: "IX_Photos_SalonId",
+                table: "Photos",
                 column: "SalonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_SalonId",
-                table: "Review",
+                name: "IX_Reviews_SalonId",
+                table: "Reviews",
                 column: "SalonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_UserId",
-                table: "Review",
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Service_SalonId",
-                table: "Service",
-                column: "SalonId");
+                name: "IX_Salons_AddressId",
+                table: "Salons",
+                column: "AddressId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Service_WorkerId",
-                table: "Service",
+                name: "IX_Services_WorkerId",
+                table: "Services",
                 column: "WorkerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Visit_UserId",
-                table: "Visit",
+                name: "IX_Users_AddressId",
+                table: "Users",
+                column: "AddressId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_ServiceId",
+                table: "Visits",
+                column: "ServiceId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_UserId",
+                table: "Visits",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Worker_SalonId",
-                table: "Worker",
+                name: "IX_Workers_SalonId",
+                table: "Workers",
                 column: "SalonId");
         }
 
@@ -261,28 +275,28 @@ namespace HairdressesAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Photo");
+                name: "Photos");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
-                name: "Visit");
+                name: "Visits");
 
             migrationBuilder.DropTable(
-                name: "Service");
+                name: "Services");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Worker");
+                name: "Workers");
 
             migrationBuilder.DropTable(
-                name: "Salon");
+                name: "Salons");
 
             migrationBuilder.DropTable(
-                name: "Adress");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Cities");

@@ -6,6 +6,8 @@
         public DateTime Date { get; init; }
         public bool IsActive { get; init; }
         public bool Notification { get; init; }
+        public int ServiceId { get; init; }
+        public int UserId { get; init; }
         public UserDTO User { get; init; }
         public ServiceDTO Service { get; init; }
     }

@@ -1,7 +1,16 @@
-using HairdressesAPI.Persistent;
+﻿using HairdressesAPI.Persistent;
 using Microsoft.EntityFrameworkCore;
+using HairdressesAPI.Controllers;
+using HairdressesAPI.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers()
+     .AddJsonOptions(options =>
+     {
+         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+     });
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(option =>

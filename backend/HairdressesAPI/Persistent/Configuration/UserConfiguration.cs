@@ -25,6 +25,16 @@ namespace HairdressesAPI.Persistent.Configuration
             builder.Property(x => x.PhoneNumber)
                 .HasMaxLength(12)
                 .HasColumnType("varchar(12)");
+
+            builder.HasMany(x => x.Reviews)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasMany(x => x.Visit)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .IsRequired();
         }
     }
 }

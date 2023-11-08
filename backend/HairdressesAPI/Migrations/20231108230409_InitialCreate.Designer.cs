@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairdressesAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231107194133_ChangeDb")]
-    partial class ChangeDb
+    [Migration("20231108230409_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace HairdressesAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HairdressesAPI.DTOs.AdressDTO", b =>
+            modelBuilder.Entity("HairdressesAPI.DTOs.AddressDTO", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +50,7 @@ namespace HairdressesAPI.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Adress");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.CityDTO", b =>
@@ -98,7 +98,7 @@ namespace HairdressesAPI.Migrations
 
                     b.HasIndex("SalonId");
 
-                    b.ToTable("Photo");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.ReviewDTO", b =>
@@ -117,7 +117,7 @@ namespace HairdressesAPI.Migrations
                     b.Property<int>("SalonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("UserReview")
@@ -130,12 +130,18 @@ namespace HairdressesAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.SalonDTO", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -160,7 +166,10 @@ namespace HairdressesAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Salon");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
+                    b.ToTable("Salons");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.ServiceDTO", b =>
@@ -180,9 +189,6 @@ namespace HairdressesAPI.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("decimal(5, 2)");
 
-                    b.Property<int>("SalonId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2(7)");
 
@@ -191,16 +197,21 @@ namespace HairdressesAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SalonId");
-
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("Service");
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.UserDTO", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AddressId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -225,13 +236,19 @@ namespace HairdressesAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.VisitDTO", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2(7)");
@@ -242,14 +259,20 @@ namespace HairdressesAPI.Migrations
                     b.Property<bool>("Notification")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ServiceId")
+                        .IsUnique();
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Visit");
+                    b.ToTable("Visits");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.WorkerDTO", b =>
@@ -287,10 +310,10 @@ namespace HairdressesAPI.Migrations
 
                     b.HasIndex("SalonId");
 
-                    b.ToTable("Worker");
+                    b.ToTable("Workers");
                 });
 
-            modelBuilder.Entity("HairdressesAPI.DTOs.AdressDTO", b =>
+            modelBuilder.Entity("HairdressesAPI.DTOs.AddressDTO", b =>
                 {
                     b.HasOne("HairdressesAPI.DTOs.CityDTO", "City")
                         .WithMany("Adress")
@@ -317,14 +340,11 @@ namespace HairdressesAPI.Migrations
                     b.HasOne("HairdressesAPI.DTOs.SalonDTO", "Salon")
                         .WithMany("Reviews")
                         .HasForeignKey("SalonId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HairdressesAPI.DTOs.UserDTO", "User")
-                        .WithMany("Review")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Salon");
 
@@ -333,9 +353,9 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.SalonDTO", b =>
                 {
-                    b.HasOne("HairdressesAPI.DTOs.AdressDTO", "Adress")
+                    b.HasOne("HairdressesAPI.DTOs.AddressDTO", "Adress")
                         .WithOne("Salon")
-                        .HasForeignKey("HairdressesAPI.DTOs.SalonDTO", "Id")
+                        .HasForeignKey("HairdressesAPI.DTOs.SalonDTO", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -346,14 +366,13 @@ namespace HairdressesAPI.Migrations
                 {
                     b.HasOne("HairdressesAPI.DTOs.SalonDTO", "Salon")
                         .WithMany("Services")
-                        .HasForeignKey("SalonId")
+                        .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HairdressesAPI.DTOs.WorkerDTO", "Worker")
                         .WithMany("Service")
                         .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Salon");
@@ -363,9 +382,9 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.UserDTO", b =>
                 {
-                    b.HasOne("HairdressesAPI.DTOs.AdressDTO", "Adress")
+                    b.HasOne("HairdressesAPI.DTOs.AddressDTO", "Adress")
                         .WithOne("User")
-                        .HasForeignKey("HairdressesAPI.DTOs.UserDTO", "Id")
+                        .HasForeignKey("HairdressesAPI.DTOs.UserDTO", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -376,8 +395,7 @@ namespace HairdressesAPI.Migrations
                 {
                     b.HasOne("HairdressesAPI.DTOs.ServiceDTO", "Service")
                         .WithOne("Visit")
-                        .HasForeignKey("HairdressesAPI.DTOs.VisitDTO", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("HairdressesAPI.DTOs.VisitDTO", "ServiceId")
                         .IsRequired();
 
                     b.HasOne("HairdressesAPI.DTOs.UserDTO", "User")
@@ -402,7 +420,7 @@ namespace HairdressesAPI.Migrations
                     b.Navigation("Salon");
                 });
 
-            modelBuilder.Entity("HairdressesAPI.DTOs.AdressDTO", b =>
+            modelBuilder.Entity("HairdressesAPI.DTOs.AddressDTO", b =>
                 {
                     b.Navigation("Salon")
                         .IsRequired();
@@ -434,7 +452,7 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.UserDTO", b =>
                 {
-                    b.Navigation("Review");
+                    b.Navigation("Reviews");
 
                     b.Navigation("Visit");
                 });

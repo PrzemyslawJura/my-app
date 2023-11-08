@@ -13,6 +13,10 @@ namespace HairdressesAPI.Persistent.Configuration
             builder.Property(x => x.PhotoURL)
                 .HasColumnType("varchar(250)");
 
+            builder.HasOne(x => x.Salon)
+                .WithMany(x => x.Photos)
+                .HasForeignKey(x => x.SalonId)
+                .IsRequired();
         }
     }
 }

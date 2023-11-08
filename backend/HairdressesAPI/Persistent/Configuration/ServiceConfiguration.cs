@@ -20,6 +20,16 @@ namespace HairdressesAPI.Persistent.Configuration
             
             builder.Property(x => x.Time)
                 .HasColumnType("datetime2(7)");
+
+            builder.HasOne(x => x.Visit)
+                .WithOne(x => x.Service)
+                .HasForeignKey<VisitDTO>(x => x.ServiceId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.HasOne(x => x.Worker)
+                .WithMany(x => x.Service)
+                .HasForeignKey(x => x.WorkerId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }
