@@ -23,8 +23,7 @@ namespace HairdressesAPI.Persistent.Configuration
 
             builder.HasOne(x => x.User)
                 .WithOne(x => x.Adress)
-                .HasForeignKey<UserDTO>(x => x.AddressId)
-                .IsRequired();
+                .HasForeignKey<UserDTO>(x => x.AddressId);
 
             builder.HasOne(x => x.City)
                 .WithMany(x => x.Adress)

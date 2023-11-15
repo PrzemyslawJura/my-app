@@ -208,7 +208,6 @@ namespace HairdressesAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AddressId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -234,7 +233,8 @@ namespace HairdressesAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AddressId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -381,9 +381,7 @@ namespace HairdressesAPI.Migrations
                 {
                     b.HasOne("HairdressesAPI.DTOs.AddressDTO", "Adress")
                         .WithOne("User")
-                        .HasForeignKey("HairdressesAPI.DTOs.UserDTO", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HairdressesAPI.DTOs.UserDTO", "AddressId");
 
                     b.Navigation("Adress");
                 });

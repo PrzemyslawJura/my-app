@@ -1,5 +1,9 @@
-﻿using HairdressesAPI.Models;
+﻿using HairdressesAPI.DTOs;
+using HairdressesAPI.Models;
 using HairdressesAPI.Persistent;
+using HairdressesAPI.Persistent.Abstraction;
+using HairdressesAPI.Services;
+using HairdressesAPI.Services.Abstraction;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,25 +15,56 @@ namespace HairdressesAPI.Controllers
     public class CityController : ControllerBase
     {
         private readonly ILogger<CityController> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
+        private readonly ICityService _cityService;
 
-        public CityController(ApplicationDbContext context, ILogger<CityController> logger)
+        public CityController(IApplicationDbContext context, ICityService cityService, ILogger<CityController> logger)
         {
             _context = context;
             _logger = logger;
+            _cityService = cityService; 
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult<IEnumerable<City>>> GetAll(CancellationToken cancellationToken)
         {
-            var result =  _context.Cities.Include(x => x.Adress);
+            var result = await _cityService.GetAllAsync(cancellationToken);
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetByName/{name}")]
+        public async Task<ActionResult<City>> GetByName(string name, CancellationToken cancellationToken)
+        {
+            var result = await _cityService.GetByNameAsync(name, cancellationToken);
 
             if (result is null)
             {
-                return NotFound();
+                return BadRequest($"Not found City with name: {name}");
             }
 
             return Ok(result);
+        }
+
+        [HttpGet("GetById/{id}")]
+        public async Task<ActionResult<City>> GetById(int id, CancellationToken cancellationToken)
+        {
+            var result = await _cityService.GetByIdAsync(id, cancellationToken);
+
+            if (result is null)
+            {
+                return BadRequest($"Not found City with id: {id}");
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<City>> Create(City city, CancellationToken cancellationToken)
+        {
+            await _cityService.AddAsync(city, cancellationToken);
+
+            return CreatedAtAction(nameof(GetByName), new { name = city.CityName }, city);
         }
     }
 }

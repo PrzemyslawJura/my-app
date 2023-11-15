@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HairdressesAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231108230409_InitialCreate")]
+    [Migration("20231109091019_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -211,7 +211,6 @@ namespace HairdressesAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AddressId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -237,7 +236,8 @@ namespace HairdressesAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AddressId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -384,9 +384,7 @@ namespace HairdressesAPI.Migrations
                 {
                     b.HasOne("HairdressesAPI.DTOs.AddressDTO", "Adress")
                         .WithOne("User")
-                        .HasForeignKey("HairdressesAPI.DTOs.UserDTO", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HairdressesAPI.DTOs.UserDTO", "AddressId");
 
                     b.Navigation("Adress");
                 });

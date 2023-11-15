@@ -7,8 +7,7 @@ namespace HairdressesAPI.Models
         public int Id { get; set; }
         public string Street { get; set; }
         public string ZipCode { get; set; }
-        public CityDTO City { get; init; }
-        public UserDTO? User { get; set; }
-        public SalonDTO Salon { get; set; }
+        public string CityName { get; set; }
+        public int CityId { get; set; }
     }
 }

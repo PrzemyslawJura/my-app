@@ -1,4 +1,5 @@
 ﻿using HairdressesAPI.DTOs;
+using HairdressesAPI.Mappings;
 using HairdressesAPI.Models;
 using HairdressesAPI.Persistent.Abstraction;
 using HairdressesAPI.Services.Abstraction;
@@ -13,10 +14,9 @@ namespace HairdressesAPI.Services
         {
             _context = context;
         }
-
         public async Task AddAsync(Salon salon, CancellationToken cancellationToken)
         {
-            var entity = new SalonDTO { };
+            var entity = salon.MapSalonToSalonDTO();
 
             _context.Salons.Add(entity);
 

@@ -33,6 +33,7 @@
 *.pdb  # Program database files for debugger
 
 #directory
+/backend/HairdressesAPI/Photos
 /backend/HairdressesAPI/obj
 
 # Packages #

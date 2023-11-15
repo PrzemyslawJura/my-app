@@ -2,11 +2,12 @@
 
 namespace HairdressesAPI.Models
 {
-    public class Photo
+    public class PhotoInfo
     {
         public int Id { get; init; }
+        public IFormFile Photo { get; init; }
         public string PhotoURL { get; init; }
         public bool IsMain { get; init; }
-        public SalonDTO Salon { get; init; }
+        public int SalonId { get; init; }
     }
 }
