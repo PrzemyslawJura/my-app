@@ -9,5 +9,7 @@ namespace HairdressesAPI.Models
         public string Description { get; init; }
         public string Email { get; init; }
         public string PhoneNumber { get; init; }
+        public Address Address { get; init; }
+        public PhotoInfo Photo { get; set; }
     }
 }

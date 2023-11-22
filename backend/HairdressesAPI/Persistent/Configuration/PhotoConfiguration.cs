@@ -17,6 +17,10 @@ namespace HairdressesAPI.Persistent.Configuration
                 .WithMany(x => x.Photos)
                 .HasForeignKey(x => x.SalonId)
                 .IsRequired();
+
+            builder.HasOne(x => x.Worker)
+                .WithMany(x => x.Photos)
+                .HasForeignKey(x => x.WorkerId);
         }
     }
 }

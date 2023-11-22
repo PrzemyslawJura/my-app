@@ -10,5 +10,6 @@
         public int SalonId { get; init; }
         public IEnumerable<ServiceDTO>? Service { get; init; }
         public SalonDTO Salon { get; init; }
+        public IEnumerable<PhotoDTO>? Photos { get; set; }
     }
 }

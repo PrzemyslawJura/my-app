@@ -17,9 +17,7 @@ namespace HairdressesAPI.Services
         }
         public async Task AddAsync(City city, CancellationToken cancellationToken)
         {
-            var entity = new CityDTO {CityName = city.CityName, Country = city.Country};
-
-            _context.Cities.Add(entity);
+            _context.Cities.Add(city.MapCityToCityDTO());
 
             await _context.SaveChangesAsync();
         }

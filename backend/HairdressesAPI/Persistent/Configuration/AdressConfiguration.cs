@@ -12,12 +12,15 @@ namespace HairdressesAPI.Persistent.Configuration
 
             builder.Property(x => x.Street)
                 .HasMaxLength(30);
-            
+
+            builder.Property(x => x.LocalNumber)
+                .HasMaxLength(30);
+
             builder.Property(x => x.ZipCode)
                 .HasMaxLength(30);
 
             builder.HasOne(x => x.Salon)
-                .WithOne(x => x.Adress)
+                .WithOne(x => x.Address)
                 .HasForeignKey<SalonDTO>(x => x.AddressId)
                 .IsRequired();
 

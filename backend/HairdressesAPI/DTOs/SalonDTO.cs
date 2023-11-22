@@ -8,7 +8,7 @@
         public string Email { get; init; }
         public string PhoneNumber { get; init; }
         public int AddressId { get; init; }
-        public AddressDTO Adress { get; init; }
+        public AddressDTO Address { get; init; }
         public IEnumerable<PhotoDTO>?  Photos { get; init; }
         public IEnumerable<WorkerDTO>? Workers { get; init; }
         public IEnumerable<ServiceDTO>? Services { get; init; }

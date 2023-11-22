@@ -9,7 +9,7 @@ namespace HairdressesAPI.Models
         public string SecondName { get; init; }
         public string Email { get; init; }
         public string PhoneNumber { get; init; }
-        public IEnumerable<ServiceDTO>? Service { get; init; }
-        public SalonDTO Salon { get; init; }
+        public int SalonId { get; set; }
+        public PhotoInfo? Photo { get; set; }
     }
 }

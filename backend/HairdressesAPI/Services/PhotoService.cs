@@ -5,6 +5,7 @@ using HairdressesAPI.Persistent.Abstraction;
 using HairdressesAPI.Services.Abstraction;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ContentModel;
 
 namespace HairdressesAPI.Services
 {
@@ -20,18 +21,18 @@ namespace HairdressesAPI.Services
         {
             if(photoInfo.Photo.Length > 0)
             {
-                var currentDirectoryPath = Directory.GetCurrentDirectory();
+                var currentDirectoryPath = "C:\\Users\\wierz\\Desktop\\my-app\\frontend\\public";
 
-                var filePath = $"{currentDirectoryPath}/Photos/{photoInfo.SalonId}/photo{photoInfo.Id}.jpg";
+                var filePath = $"{currentDirectoryPath}\\Photos\\{photoInfo.SalonId}\\photo{photoInfo.Id}.jpg";
 
-                if (!Directory.Exists($"{currentDirectoryPath}/Photos"))
+                if (!Directory.Exists($"{currentDirectoryPath}\\Photos"))
                 {
-                    Directory.CreateDirectory($"{currentDirectoryPath}/Photos");
+                    Directory.CreateDirectory($"{currentDirectoryPath}\\Photos");
                 }
 
-                if (!Directory.Exists($"{currentDirectoryPath}/Photos/{photoInfo.SalonId}"))
+                if (!Directory.Exists($"{currentDirectoryPath}\\Photos\\{photoInfo.SalonId}"))
                 {
-                    Directory.CreateDirectory($"{currentDirectoryPath}/Photos/{photoInfo.SalonId}");
+                    Directory.CreateDirectory($"{currentDirectoryPath}\\Photos\\{photoInfo.SalonId}");
                 }
 
                 using (var stream = File.Create(filePath))

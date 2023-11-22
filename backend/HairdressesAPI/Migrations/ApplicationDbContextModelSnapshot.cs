@@ -33,6 +33,11 @@ namespace HairdressesAPI.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
+                    b.Property<string>("LocalNumber")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<string>("Street")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -91,9 +96,14 @@ namespace HairdressesAPI.Migrations
                     b.Property<int>("SalonId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WorkerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SalonId");
+
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("Photos");
                 });
@@ -215,20 +225,15 @@ namespace HairdressesAPI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("varchar(12)");
 
-                    b.Property<string>("SecondName")
+                    b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -329,7 +334,13 @@ namespace HairdressesAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HairdressesAPI.DTOs.WorkerDTO", "Worker")
+                        .WithMany("Photos")
+                        .HasForeignKey("WorkerId");
+
                     b.Navigation("Salon");
+
+                    b.Navigation("Worker");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.ReviewDTO", b =>
@@ -350,13 +361,13 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.SalonDTO", b =>
                 {
-                    b.HasOne("HairdressesAPI.DTOs.AddressDTO", "Adress")
+                    b.HasOne("HairdressesAPI.DTOs.AddressDTO", "Address")
                         .WithOne("Salon")
                         .HasForeignKey("HairdressesAPI.DTOs.SalonDTO", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Adress");
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.ServiceDTO", b =>
@@ -454,6 +465,8 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.WorkerDTO", b =>
                 {
+                    b.Navigation("Photos");
+
                     b.Navigation("Service");
                 });
 #pragma warning restore 612, 618

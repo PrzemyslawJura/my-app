@@ -10,13 +10,9 @@ namespace HairdressesAPI.Persistent.Configuration
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.FirstName)
-                .HasMaxLength(30)
-                .HasColumnType("varchar(30)");
-
-            builder.Property(x => x.SecondName)
-                .HasMaxLength(30)
-                .HasColumnType("varchar(30)");
+            builder.Property(x => x.UserName)
+                .HasMaxLength(50)
+                .HasColumnType("varchar(50)");
 
             builder.Property(x => x.Email)
                 .HasMaxLength(100)
