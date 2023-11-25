@@ -31,9 +31,18 @@ namespace HairdressesAPI.Services
             return result;
         }
 
-        public Task<Worker> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Worker>> GetAllBySalonIdAsync(int salonid, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await _context.Workers.Where(i => i.SalonId == salonid).Select(x => x.MapWorkerDTOToWorker()).ToListAsync(cancellationToken);
+
+            return result;
+        }
+
+        public async Task<Worker?> GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Workers.FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
+
+            return result.MapWorkerDTOToWorker();
         }
 
         public Task<Worker> GetByNameAsync(string name, CancellationToken cancellationToken)

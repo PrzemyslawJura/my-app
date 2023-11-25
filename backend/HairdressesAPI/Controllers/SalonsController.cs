@@ -142,6 +142,10 @@ namespace HairdressesAPI.Controllers
 
             worker.Photo.SalonId = worker.SalonId;
 
+            worker.SalonId = 1;
+
+            worker.Photo.SalonId = worker.SalonId;
+
             await _workerService.AddAsync(worker, cancellationToken);
 
             var result = _workerService.GetAllAsync(cancellationToken).Result.Select(x => x.Id).Last();
@@ -153,6 +157,40 @@ namespace HairdressesAPI.Controllers
             await _photoService.AddAsync(worker.Photo, cancellationToken);
 
             return CreatedAtAction(nameof(GetByName), new { name = worker.SecondName }, worker);
+        }
+
+        [HttpGet("WorkersWithSalonId/{salonId}")]
+        public async Task<ActionResult<IEnumerable<Worker>>> WorkersWithSalonId(int salonId, CancellationToken cancellationToken)
+        {
+            var result = await _workerService.GetAllBySalonIdAsync(salonId, cancellationToken);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPost("AddService")]
+        public async Task<ActionResult<Service>> CreateService(Service service, CancellationToken cancellationToken)
+        {
+            await _serviceService.AddAsync(service, cancellationToken);
+
+            return CreatedAtAction(nameof(GetByName), new { name = service.Name }, service);
+        }
+
+        [HttpGet("ServicesWithWorkerId/{workerId}")]
+        public async Task<ActionResult<IEnumerable<Worker>>> ServiceWithWorkerId(int workerId, CancellationToken cancellationToken)
+        {
+            var result = await _serviceService.GetByWorkerIdAsync(workerId, cancellationToken);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }

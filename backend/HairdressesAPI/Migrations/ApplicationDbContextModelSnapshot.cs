@@ -196,8 +196,9 @@ namespace HairdressesAPI.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("decimal(5, 2)");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2(7)");
+                    b.Property<int>("Time")
+                        .HasMaxLength(4)
+                        .HasColumnType("int");
 
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
@@ -372,18 +373,10 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.ServiceDTO", b =>
                 {
-                    b.HasOne("HairdressesAPI.DTOs.SalonDTO", "Salon")
-                        .WithMany("Services")
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HairdressesAPI.DTOs.WorkerDTO", "Worker")
                         .WithMany("Service")
                         .HasForeignKey("WorkerId")
                         .IsRequired();
-
-                    b.Navigation("Salon");
 
                     b.Navigation("Worker");
                 });
@@ -444,8 +437,6 @@ namespace HairdressesAPI.Migrations
                     b.Navigation("Photos");
 
                     b.Navigation("Reviews");
-
-                    b.Navigation("Services");
 
                     b.Navigation("Workers");
                 });

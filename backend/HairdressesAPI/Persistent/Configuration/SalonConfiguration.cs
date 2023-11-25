@@ -26,11 +26,6 @@ namespace HairdressesAPI.Persistent.Configuration
                 .HasMaxLength(12)
                 .HasColumnType("varchar(12)");
 
-            builder.HasMany(x => x.Services)
-                .WithOne(x => x.Salon)
-                .HasForeignKey(x => x.WorkerId)
-                .IsRequired();
-
             builder.HasMany(x => x.Workers)
                 .WithOne(x => x.Salon)
                 .HasForeignKey(x => x.SalonId)

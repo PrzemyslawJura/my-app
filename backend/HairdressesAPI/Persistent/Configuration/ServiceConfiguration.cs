@@ -17,9 +17,9 @@ namespace HairdressesAPI.Persistent.Configuration
             builder.Property(x => x.Price)
                 .HasMaxLength(10)
                 .HasColumnType("decimal(5, 2)");
-            
+
             builder.Property(x => x.Time)
-                .HasColumnType("datetime2(7)");
+                .HasMaxLength(4);
 
             builder.HasOne(x => x.Visit)
                 .WithOne(x => x.Service)
