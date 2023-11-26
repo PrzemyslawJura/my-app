@@ -9,5 +9,6 @@ namespace HairdressesAPI.Services.Abstraction
         Task<Service> GetByNameAsync(string name, CancellationToken cancellationToken);
         Task<Service> GetAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<Service>> GetByWorkerIdAsync(int id, CancellationToken cancellationToken);
+        Task<IEnumerable<Service>> GetBySalonIdAsync(int id, CancellationToken cancellationToken);
     }
 }

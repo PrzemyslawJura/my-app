@@ -51,6 +51,7 @@ namespace HairdressesAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _context.Salons
+                .Include(x => x.Workers)
                 .Include(x => x.Photos)
                 .Include(x => x.Address)
                     .ThenInclude(x => x.City);
@@ -64,9 +65,9 @@ namespace HairdressesAPI.Controllers
         }
 
         [HttpGet("{name}")]
-        public IActionResult GetByName(string name)
+        public IActionResult GetByName(string name, CancellationToken cancellationToken)
         {
-            var result = _context.Salons.FirstOrDefault(x => x.Name == name);
+            var result = _salonService.GetByNameAsync(name, cancellationToken);
 
             if (result is null)
             {
@@ -184,6 +185,32 @@ namespace HairdressesAPI.Controllers
         public async Task<ActionResult<IEnumerable<Worker>>> ServiceWithWorkerId(int workerId, CancellationToken cancellationToken)
         {
             var result = await _serviceService.GetByWorkerIdAsync(workerId, cancellationToken);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetSalonById/{id}")]
+        public async Task<ActionResult<Salon>> GetSalonById(int id, CancellationToken cancellationToken)
+        {
+            var result = await _salonService.GetByIdAsync(id, cancellationToken);
+
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("ServicesWithSalonId/{workerId}")]
+        public async Task<ActionResult<IEnumerable<Service>>> ServiceWithSalonId(int salonId, CancellationToken cancellationToken)
+        {
+            var result = await _serviceService.GetBySalonIdAsync(salonId, cancellationToken);
 
             if (result is null)
             {

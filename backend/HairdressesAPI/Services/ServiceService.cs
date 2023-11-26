@@ -43,6 +43,18 @@ namespace HairdressesAPI.Services
 
             return result;
         }
+        public async Task<IEnumerable<Service>> GetBySalonIdAsync(int id, CancellationToken cancellationToken)
+        {
+            var result = await _context.Services
+                                        .Include(x => x.Worker)
+                                            .ThenInclude(x => x.Salon)
+                                        .Where(i => i.Worker.SalonId == id)
+                                        .Take(3)
+                                        .Select(x => x.MapServiceDTOToService())
+                                        .ToListAsync(cancellationToken);
+
+            return result;
+        }
     }
 
 }

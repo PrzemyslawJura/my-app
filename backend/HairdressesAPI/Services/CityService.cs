@@ -24,7 +24,7 @@ namespace HairdressesAPI.Services
 
         public async Task<IEnumerable<City>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var result = await _context.Cities.Select(x => x.MapCityDTOToCity()).ToListAsync();
+            var result = await _context.Cities.Select(x => x.MapCityDTOToCity()).ToListAsync(cancellationToken);
 
             return result;
         }
