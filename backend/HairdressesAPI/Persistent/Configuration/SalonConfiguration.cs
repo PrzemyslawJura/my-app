@@ -36,6 +36,13 @@ namespace HairdressesAPI.Persistent.Configuration
                 .HasForeignKey(x => x.SalonId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
+            builder.HasOne(x => x.ApplicationUser)
+                .WithOne(x => x.Salon)
+                .HasForeignKey<ApplicationUserDTO>(x => x.SalonId);
+
+            builder.HasMany(x => x.Visits)
+            .WithMany(x => x.Salons);
+
         }
     }
 }

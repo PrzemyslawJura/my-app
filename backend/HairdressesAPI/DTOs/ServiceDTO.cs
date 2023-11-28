@@ -7,7 +7,7 @@
         public float Price { get; init; }
         public int Time { get; init; }
         public int WorkerId { get; init; }
-        public VisitDTO Visit { get; init; }
+        public IEnumerable<VisitDTO> Visit { get; init; }
         public WorkerDTO Worker { get; init; }
     }
 }

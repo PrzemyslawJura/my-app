@@ -1,4 +1,6 @@
-﻿namespace HairdressesAPI.DTOs
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace HairdressesAPI.DTOs
 {
     public class SalonDTO
     {
@@ -12,5 +14,7 @@
         public IEnumerable<PhotoDTO>?  Photos { get; init; }
         public IEnumerable<WorkerDTO>? Workers { get; init; }
         public IEnumerable<ReviewDTO>? Reviews { get; init; }
+        public ApplicationUserDTO? ApplicationUser { get; set; }
+        public IEnumerable<VisitDTO>? Visits { get; set; }
     }
 }

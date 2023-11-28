@@ -17,7 +17,7 @@ namespace HairdressesAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -53,6 +53,87 @@ namespace HairdressesAPI.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("HairdressesAPI.DTOs.ApplicationUserDTO", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("SalonId")
+                        .HasMaxLength(30)
+                        .HasColumnType("int");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("UserId")
+                        .HasMaxLength(30)
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("SalonId")
+                        .IsUnique()
+                        .HasFilter("[SalonId] IS NOT NULL");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.CityDTO", b =>
@@ -262,6 +343,9 @@ namespace HairdressesAPI.Migrations
                     b.Property<bool>("Notification")
                         .HasColumnType("bit");
 
+                    b.Property<int>("SalonId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
@@ -269,11 +353,6 @@ namespace HairdressesAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ServiceId")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Visits");
                 });
@@ -316,6 +395,184 @@ namespace HairdressesAPI.Migrations
                     b.ToTable("Workers");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("SalonDTOVisitDTO", b =>
+                {
+                    b.Property<int>("SalonsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VisitsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SalonsId", "VisitsId");
+
+                    b.HasIndex("VisitsId");
+
+                    b.ToTable("SalonDTOVisitDTO");
+                });
+
+            modelBuilder.Entity("ServiceDTOVisitDTO", b =>
+                {
+                    b.Property<int>("ServicesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VisitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServicesId", "VisitId");
+
+                    b.HasIndex("VisitId");
+
+                    b.ToTable("ServiceDTOVisitDTO");
+                });
+
+            modelBuilder.Entity("UserDTOVisitDTO", b =>
+                {
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VisitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UsersId", "VisitId");
+
+                    b.HasIndex("VisitId");
+
+                    b.ToTable("UserDTOVisitDTO");
+                });
+
             modelBuilder.Entity("HairdressesAPI.DTOs.AddressDTO", b =>
                 {
                     b.HasOne("HairdressesAPI.DTOs.CityDTO", "City")
@@ -325,6 +582,21 @@ namespace HairdressesAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("City");
+                });
+
+            modelBuilder.Entity("HairdressesAPI.DTOs.ApplicationUserDTO", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.SalonDTO", "Salon")
+                        .WithOne("ApplicationUser")
+                        .HasForeignKey("HairdressesAPI.DTOs.ApplicationUserDTO", "SalonId");
+
+                    b.HasOne("HairdressesAPI.DTOs.UserDTO", "User")
+                        .WithOne("ApplicationUser")
+                        .HasForeignKey("HairdressesAPI.DTOs.ApplicationUserDTO", "UserId");
+
+                    b.Navigation("Salon");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.PhotoDTO", b =>
@@ -390,24 +662,6 @@ namespace HairdressesAPI.Migrations
                     b.Navigation("Adress");
                 });
 
-            modelBuilder.Entity("HairdressesAPI.DTOs.VisitDTO", b =>
-                {
-                    b.HasOne("HairdressesAPI.DTOs.ServiceDTO", "Service")
-                        .WithOne("Visit")
-                        .HasForeignKey("HairdressesAPI.DTOs.VisitDTO", "ServiceId")
-                        .IsRequired();
-
-                    b.HasOne("HairdressesAPI.DTOs.UserDTO", "User")
-                        .WithMany("Visit")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Service");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("HairdressesAPI.DTOs.WorkerDTO", b =>
                 {
                     b.HasOne("HairdressesAPI.DTOs.SalonDTO", "Salon")
@@ -417,6 +671,102 @@ namespace HairdressesAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Salon");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.ApplicationUserDTO", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.ApplicationUserDTO", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HairdressesAPI.DTOs.ApplicationUserDTO", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.ApplicationUserDTO", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SalonDTOVisitDTO", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.SalonDTO", null)
+                        .WithMany()
+                        .HasForeignKey("SalonsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HairdressesAPI.DTOs.VisitDTO", null)
+                        .WithMany()
+                        .HasForeignKey("VisitsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ServiceDTOVisitDTO", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.ServiceDTO", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HairdressesAPI.DTOs.VisitDTO", null)
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UserDTOVisitDTO", b =>
+                {
+                    b.HasOne("HairdressesAPI.DTOs.UserDTO", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HairdressesAPI.DTOs.VisitDTO", null)
+                        .WithMany()
+                        .HasForeignKey("VisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.AddressDTO", b =>
@@ -434,6 +784,8 @@ namespace HairdressesAPI.Migrations
 
             modelBuilder.Entity("HairdressesAPI.DTOs.SalonDTO", b =>
                 {
+                    b.Navigation("ApplicationUser");
+
                     b.Navigation("Photos");
 
                     b.Navigation("Reviews");
@@ -441,17 +793,11 @@ namespace HairdressesAPI.Migrations
                     b.Navigation("Workers");
                 });
 
-            modelBuilder.Entity("HairdressesAPI.DTOs.ServiceDTO", b =>
-                {
-                    b.Navigation("Visit")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HairdressesAPI.DTOs.UserDTO", b =>
                 {
-                    b.Navigation("Reviews");
+                    b.Navigation("ApplicationUser");
 
-                    b.Navigation("Visit");
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("HairdressesAPI.DTOs.WorkerDTO", b =>

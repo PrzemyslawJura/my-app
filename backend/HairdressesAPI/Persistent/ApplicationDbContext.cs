@@ -3,12 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using HairdressesAPI.Models;
 using HairdressesAPI.Persistent.Abstraction;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HairdressesAPI.Persistent
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUserDTO>, IApplicationDbContext
     {
         public DbSet<AddressDTO> Addresses => Set<AddressDTO>();
+        public DbSet<ApplicationUserDTO> ApplicationUsers => Set<ApplicationUserDTO>();
         public DbSet<CityDTO> Cities => Set<CityDTO>();
         public DbSet<PhotoDTO> Photos => Set<PhotoDTO>();
         public DbSet<ReviewDTO> Reviews => Set<ReviewDTO>();

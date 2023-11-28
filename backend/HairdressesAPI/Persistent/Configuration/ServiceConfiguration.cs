@@ -21,10 +21,8 @@ namespace HairdressesAPI.Persistent.Configuration
             builder.Property(x => x.Time)
                 .HasMaxLength(4);
 
-            builder.HasOne(x => x.Visit)
-                .WithOne(x => x.Service)
-                .HasForeignKey<VisitDTO>(x => x.ServiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            builder.HasMany(x => x.Visit)
+                .WithMany(x => x.Services);
 
             builder.HasOne(x => x.Worker)
                 .WithMany(x => x.Service)

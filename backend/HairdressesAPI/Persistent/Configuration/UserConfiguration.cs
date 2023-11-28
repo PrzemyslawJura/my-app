@@ -28,9 +28,11 @@ namespace HairdressesAPI.Persistent.Configuration
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasMany(x => x.Visit)
+                .WithMany(x => x.Users);
+
+            builder.HasOne(x => x.ApplicationUser)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId)
-                .IsRequired();
+                .HasForeignKey<ApplicationUserDTO>(x => x.UserId);
         }
     }
 }

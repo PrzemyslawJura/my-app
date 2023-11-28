@@ -10,5 +10,6 @@
         public AddressDTO? Adress { get; init; }
         public IEnumerable<ReviewDTO>? Reviews { get; init; }
         public IEnumerable<VisitDTO>? Visit { get; init; }
+        public  ApplicationUserDTO? ApplicationUser { get; set; }
     }
 }
