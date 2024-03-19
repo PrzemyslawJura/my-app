@@ -6,6 +6,7 @@ import ForgetPass from '../home/ForgetPass'
 import SigninChose from '../home/SigninChose'
 import SigninPerson from '../home/SigninPerson'
 import SigninBiznes from '../home/Signinbiznes'
+import logo from '../assets/logo.png'
 
 
 const navigation = [
@@ -26,7 +27,7 @@ export default function NavbarHome() {
       <span className="sr-only">Logo</span>
       <img
         className="h-8 w-auto"
-        src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+        src={logo}
         alt=""
       />
     </a>
@@ -62,7 +63,7 @@ export default function NavbarHome() {
         <span className="sr-only">Logo</span>
         <img
           className="h-8 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          src={logo}
           alt=""
         />
       </a>

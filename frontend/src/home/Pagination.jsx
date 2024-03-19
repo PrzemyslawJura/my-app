@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import PaginationTile from '../shared_np_buttony_inputy_kalendarze_itp/PaginationTile'
+import PaginationTile from '../shared/PaginationTile'
 import { useState } from 'react'
 
 export default function Pagination({result, setPage, page}) {

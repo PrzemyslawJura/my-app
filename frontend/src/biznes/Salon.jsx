@@ -2,7 +2,7 @@ import { CarouselDefault } from '../components/CarouselDefault'
 import { useEffect, useState } from 'react';
 import Hairdresser from '../components/Hairdresser';
 import OneService from '../components/OneService';
-import MainButton from '../shared_np_buttony_inputy_kalendarze_itp/MainButton';
+import MainButton from '../shared/MainButton';
 import { getId, getToken } from '../home/Auth';
 import { useNavigate } from 'react-router-dom';
 

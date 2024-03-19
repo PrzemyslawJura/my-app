@@ -2,6 +2,7 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 import { setToken, setId } from './Auth';
 import { useNavigate } from "react-router-dom";
+import logo from '../assets/logo.png'
 
 const loginUser = async (email, password) => {
   try
@@ -56,7 +57,7 @@ const Login = ({ setIsShown }) => {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+              src={logo}
               alt="Your Company"
             />
                           <XMarkIcon

@@ -1,4 +1,5 @@
 import { Typography } from "@material-tailwind/react";
+import logo from '../assets/logo.png'
 
 export default function FooterWithLogo() {
   return (
@@ -6,7 +7,7 @@ export default function FooterWithLogo() {
       <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 text-center md:justify-between">
       <img
         className="h-8 w-auto"
-        src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+        src={logo}
         alt=""
       />
       </div>

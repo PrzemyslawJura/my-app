@@ -1,5 +1,6 @@
 import { XMarkIcon, CalendarDaysIcon, UserIcon, ClockIcon } from '@heroicons/react/20/solid'
 import { getId } from './Auth';
+import logo from '../assets/logo.png'
 
 const StepTwo = ({ serviceId, isShown, Time, Date, person }) => {
 
@@ -33,7 +34,7 @@ const StepTwo = ({ serviceId, isShown, Time, Date, person }) => {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+              src={logo}
               alt="Your Company"
             />
                           <XMarkIcon
@@ -52,14 +53,26 @@ const StepTwo = ({ serviceId, isShown, Time, Date, person }) => {
 
             <div className="flex items-center gap-x-4">
             <img className="h-28 w-28 flex-none rounded-full bg-gray-50" src={process.env.PUBLIC_URL + "/Photos/" + person.id + "/" + "photo0.jpg"} alt="" />                <div className='text-gray-800 '>
-                <span className="flex ">
+                <span className="flex font-bold">
                     {person.name}
                   </span>
-                  <span className="flex">
+                  <span className="flex text-sm text-gray-500">
                   {person.address.city.cityName}, ul.{person.address.street} {person.address.localNumber}, {person.address.zipCode}
                   </span>
                   <span className="flex">
                     {serviceId.name} {serviceId.price} zł
+                  </span>
+                  <span className="flex">
+                    <CalendarDaysIcon
+                        className="h-6 w-6 mr-1"
+                        aria-hidden="true"
+                    />
+                    {Date}
+                    <ClockIcon
+                        className="h-6 w-6 mr-1 ml-3"
+                        aria-hidden="true"
+                    />
+                    {Time}
                   </span>
                 </div>
               </div>
@@ -74,20 +87,7 @@ const StepTwo = ({ serviceId, isShown, Time, Date, person }) => {
                     />
                     {serviceId.workerFirstName} {serviceId.workerSecondName}
     </span>{*/}
-                  <span className="flex">
-                    <CalendarDaysIcon
-                        className="h-6 w-6 mr-2"
-                        aria-hidden="true"
-                    />
-                    {Date}
-                  </span>
-                  <span className="flex">
-                    <ClockIcon
-                        className="h-6 w-6 mr-2"
-                        aria-hidden="true"
-                    />
-                    {Time}
-                  </span>
+              
                 </div>
               </div>
               {console.log(Date)}

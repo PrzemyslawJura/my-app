@@ -1,6 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import React, { useEffect, useState } from 'react';
-import SelectMenu from '../shared_np_buttony_inputy_kalendarze_itp/SelectMenu';
+import SelectMenu from '../shared/SelectMenu';
 import { getToken } from '../home/Auth';
 
 const AddService = ({ setIsShown, workers }) => {

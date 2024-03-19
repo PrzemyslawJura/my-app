@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import AddWorker from "./AddWorker"
 import AddService from './AddService'
-import MainButton from "../shared_np_buttony_inputy_kalendarze_itp/MainButton"
-import Dropdown from "../shared_np_buttony_inputy_kalendarze_itp/Dropdown"
+import MainButton from "../shared/MainButton"
+import Dropdown from "../shared/Dropdown"
 import Hairdresser from "../components/Hairdresser"
 import { useEffect } from 'react';
 import Service from '../components/Service'

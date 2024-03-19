@@ -1,5 +1,6 @@
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import React, { useEffect, useState } from 'react';
+import logo from '../assets/logo.png'
 
 const SigninPerson = ({ setIsShown }) => {
 
@@ -55,7 +56,7 @@ const SigninPerson = ({ setIsShown }) => {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+              src={logo}
               alt="Your Company"
             />
                           <XMarkIcon

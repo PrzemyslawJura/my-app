@@ -2,6 +2,7 @@ import { XMarkIcon, CalendarDaysIcon, UserIcon, ClockIcon } from '@heroicons/rea
 import Listboxx from './Listbox'
 import ListboxxTime from './ListboxTime'
 import { useEffect, useState } from 'react'
+import logo from '../assets/logo.png'
 
 
 const StepOne = ({ isShown, setDate, setTime }) => {
@@ -13,7 +14,7 @@ const StepOne = ({ isShown, setDate, setTime }) => {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <img
               className="mx-auto h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=green&shade=600"
+              src={logo}
               alt="Your Company"
             />
                           <XMarkIcon
@@ -29,14 +30,14 @@ const StepOne = ({ isShown, setDate, setTime }) => {
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
          
 
-                  <span className="flex">
+                  <span className="flex mb-2">
                     <CalendarDaysIcon
                         className="h-6 w-6 mt-3 mr-2"
                         aria-hidden="true"
                     />
                     <Listboxx mainDate={setDate}/>
                   </span>
-                  <span className="flex">
+                  <span className="flex mb-5">
                     <ClockIcon
                         className="h-6 w-6 mt-3 mr-2"
                         aria-hidden="true"

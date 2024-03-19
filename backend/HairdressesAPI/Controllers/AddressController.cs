@@ -17,7 +17,10 @@ namespace HairdressesAPI.Controllers
         private readonly IAddressService _addressService;
         private readonly ICityService _cityService;
 
-        public AddressController(IApplicationDbContext context, IAddressService addressService, ICityService cityService, ILogger<AddressController> logger)
+        public AddressController(IApplicationDbContext context,
+            IAddressService addressService,
+            ICityService cityService,
+            ILogger<AddressController> logger)
         {
             _context = context;
             _logger = logger;
